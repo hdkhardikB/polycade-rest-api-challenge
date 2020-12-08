@@ -4,17 +4,27 @@
 	"main": "src/index.js",
 	"scripts": {
 		"lint": "eslint src/index.js",
-		"start": "babel-node src/index.js",
-		"test": "jest",
+		"start": "npm run migrate && babel-node src/index.js",
+		"test": "NODE_ENV=test TS_NODE_PROJECT=test jest --silent=false",
+		"migrate": "knex migrate:latest",
 		"watch": "nodemon --exec babel-node --watch src/index.js",
-		"watch-test": "jest --watch"
+		"watch-test": "jest --watch",
+		"seed": "knex seed:run",
+		"setup-db": "npm run migrate && npm run seed"
 	},
 	"license": "MIT",
 	"dependencies": {
+		"bookshelf": "^1.2.0",
+		"chai": "^4.2.0",
+		"dotenv": "^8.2.0",
+		"knex": "^0.21.12",
 		"koa": "^2.11.0",
 		"koa-bodyparser": "^4.2.1",
 		"koa-router": "^8.0.6",
-		"uuid": "^3.4.0"
+		"mock-knex": "^0.4.9",
+		"pg": "^8.5.1",
+		"uuid": "^3.4.0",
+		"validatorjs": "^3.21.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.8.3",
@@ -29,6 +39,6 @@
 		"testEnvironment": "node",
 		"testPathIgnorePatterns": [
 			"<rootDir>/node_modules"
-	]
+		]
 	}
 }
